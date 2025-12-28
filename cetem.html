@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CETEM BH - Centre d'Études et de Maintenance des Équipements Biomédicaux</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            font-weight: bold;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* PAGE ACCUEIL */
+        .hero {
+            background: linear-gradient(rgba(30, 60, 114, 0.9), rgba(42, 82, 152, 0.9)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23f0f4f8" width="1200" height="600"/></svg>');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .maintenance-animation {
+            max-width: 600px;
+            margin: 3rem auto 2rem;
+            position: relative;
+            height: 200px;
+        }
+
+        .equipment {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        .tools {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .tool {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.9;
+        }
+
+        .tool:nth-child(1) { animation: orbit1 8s linear infinite; }
+        .tool:nth-child(2) { animation: orbit2 8s linear infinite; }
+        .tool:nth-child(3) { animation: orbit3 8s linear infinite; }
+        .tool:nth-child(4) { animation: orbit4 8s linear infinite; }
+
+        @keyframes orbit1 {
+            0% { left: 50%; top: 10%; transform: translate(-50%, -50%); }
+            25% { left: 85%; top: 50%; transform: translate(-50%, -50%); }
+            50% { left: 50%; top: 90%; transform: translate(-50%, -50%); }
+            75% { left: 15%; top: 50%; transform: translate(-50%, -50%); }
+            100% { left: 50%; top: 10%; transform: translate(-50%, -50%); }
+        }
+
+        @keyframes orbit2 {
+            0% { left: 85%; top: 50%; transform: translate(-50%, -50%); }
+            25% { left: 50%; top: 90%; transform: translate(-50%, -50%); }
+            50% { left: 15%; top: 50%; transform: translate(-50%, -50%); }
+            75% { left: 50%; top: 10%; transform: translate(-50%, -50%); }
+            100% { left: 85%; top: 50%; transform: translate(-50%, -50%); }
+        }
+
+        @keyframes orbit3 {
+            0% { left: 50%; top: 90%; transform: translate(-50%, -50%); }
+            25% { left: 15%; top: 50%; transform: translate(-50%, -50%); }
+            50% { left: 50%; top: 10%; transform: translate(-50%, -50%); }
+            75% { left: 85%; top: 50%; transform: translate(-50%, -50%); }
+            100% { left: 50%; top: 90%; transform: translate(-50%, -50%); }
+        }
+
+        @keyframes orbit4 {
+            0% { left: 15%; top: 50%; transform: translate(-50%, -50%); }
+            25% { left: 50%; top: 10%; transform: translate(-50%, -50%); }
+            50% { left: 85%; top: 50%; transform: translate(-50%, -50%); }
+            75% { left: 50%; top: 90%; transform: translate(-50%, -50%); }
+            100% { left: 15%; top: 50%; transform: translate(-50%, -50%); }
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 20px;
+            height: 20px;
+            background: #27ae60;
+            border-radius: 50%;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: #e74c3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s, background 0.3s;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        /* PAGE SERVICES */
+        .services-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 4rem 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-icon-large {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .service-card ul {
+            list-style: none;
+            margin-top: 1rem;
+            color: #666;
+        }
+
+        .service-card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .service-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        /* PAGE MAINTENANCE */
+        .maintenance-page {
+            min-height: 100vh;
+            background: #f8f9fa;
+            padding: 4rem 2rem;
+        }
+
+        .maintenance-page .page-header {
+            color: #1e3c72;
+        }
+
+        .process-flow {
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .process-flow h2 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .process-step {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .process-step:nth-child(1) .step-number { animation-delay: 0s; }
+        .process-step:nth-child(2) .step-number { animation-delay: 0.3s; }
+        .process-step:nth-child(3) .step-number { animation-delay: 0.6s; }
+        .process-step:nth-child(4) .step-number { animation-delay: 0.9s; }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .equipment-item {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .equipment-item:hover {
+            transform: scale(1.05);
+        }
+
+        .equipment-item-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* PAGE À PROPOS */
+        <div class="logo" onclick="navigateTo('accueil-page')">🏥 CETEM BH</div>
+            <ul class="nav-links">
+                <li><a onclick="navigateTo('accueil-page')" class="active">Accueil</a></li>
+                <li><a onclick="navigateTo('maintenance-page')">Maintenance</a></li>
+                <li><a onclick="navigateTo('services-page')">Services</a></li>
+                <li><a onclick="navigateTo('equipements-page')">Équipements</a></li>
+                <li><a onclick="navigateTo('apropos-page')">À propos</a></li>
+                <li><a onclick="navigateTo('contact-page')">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- PAGE ACCUEIL -->
+    <div id="accueil-page" class="page active">
+        <section class="hero">
+            <h1>CETEM BH</h1>
+            <p>Centre d'Études et de Maintenance des Équipements Biomédicaux et Hospitaliers</p>
+            
+            <div class="maintenance-animation">
+                <div class="equipment">
+                    🏥
+                    <div class="status-indicator"></div>
+                </div>
+                <div class="tools">
+                    <div class="tool">🔧</div>
+                    <div class="tool">⚡</div>
+                    <div class="tool">🔬</div>
+                    <div class="tool">⚙️</div>
+                </div>
+            </div>
+            
+            <p style="font-size: 1.1rem; margin-top: 1rem;">Votre partenaire de confiance pour la maintenance des équipements médicaux en Tunisie</p>
+            <button class="btn" onclick="navigateTo('contact-page')">Contactez-nous</button>
+             <section id="contact" class="contact-section">
+        <div class="container">
+           
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Informations de Contact</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div>
+                            <strong>Adresse</strong><br>
+                            Tunisie
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div>
+                            <strong>Téléphone</strong><br>
+                            +216 XX XXX XXX
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div>
+                            <strong>Email</strong><br>
+                            contact@cetembh.tn
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">⏰</div>
+                        <div>
+                            <strong>Horaires</strong><br>
+                            Lun - Ven: 8h00 - 17h00<br>
+                            Urgences: 24h/24, 7j/7
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Envoyez-nous un message</h3>
+                    <form>
+                        <input type="text" placeholder="Nom complet" required>
+                        <input type="email" placeholder="Email" required>
+                        <input type="tel" placeholder="Téléphone">
+                        <textarea placeholder="Votre message" required></textarea>
+                        <button type="submit" class="btn" style="width: 100%;">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+        </section>
+        .about-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            padding: 4rem 2rem;
+        }
+
+        .about-content {
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            max-width: 1000px;
+            margin: 0 auto 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .about-content h2 {
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .value-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .value-card h4 {
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 3rem auto;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        /* PAGE ÉQUIPEMENTS */
+        .equipment-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            padding: 4rem 2rem;
+        }
+
+        .equipment-category {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .equipment-category h3 {
+            color: #e74c3c;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .equipment-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .equipment-list-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid #e74c3c;
+        }
+
+        .service-categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .service-category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .service-category-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-category-card h3 {
+            color: #e74c3c;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .service-category-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .equipment-count {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+
+        .equipment-detail-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            padding: 4rem 2rem;
+        }
+
+        .back-nav {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+        }
+
+        .back-btn {
+            background: white;
+            color: #3498db;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+        }
+
+        .equipment-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .equipment-detail-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .equipment-detail-card h3 {
+            color: #3498db;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .equipment-detail-card h4 {
+            color: #2c3e50;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .equipment-detail-card ul {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+
+        .equipment-detail-card li {
+            padding: 0.3rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #555;
+        }
+
+        .equipment-detail-card li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .maintenance-info {
+            background: #ecf0f1;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .maintenance-info strong {
+            color: #e74c3c;
+        }
+
+        /* PAGE CONTACT */
+        .contact-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            padding: 4rem 2rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .contact-info h3 {
+            color: #27ae60;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .contact-item {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            margin-top: 0.2rem;
+        }
+
+        .contact-form {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .contact-form h3 {
+            color: #27ae60;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                font-size: 0.9rem;
+            }
+
+            .hero h1, .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-steps {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <script>
+        function navigateTo(pageId) {
+            // Masquer toutes les pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Afficher la page sélectionnée
+            document.getElementById(pageId).classList.add('active');
+            
+            // Mettre à jour la navigation active
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Scroll en haut
+            window.scrollTo(0, 0);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            navigateTo('accueil-page');
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo" onclick="navigateTo('accueil-page')">🏥 CETEM BH</div>
+            <ul class="nav-links">
+                <li><a onclick="navigateTo('accueil-page')" class="active">Accueil</a></li>
+                <li><a onclick="navigateTo('maintenance-page')">Maintenance</a></li>
+                <li><a onclick="navigateTo('services-page')">Services</a></li>
+                <li><a onclick="navigateTo('equipements-page')">Équipements</a></li>
+                <li><a onclick="navigateTo('apropos-page')">À propos</a></li>
+                <li><a onclick="navigateTo('contact-page')">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- PAGE ACCUEIL -->
+    <div id="accueil-page" class="page active">
+        <section class="hero">
+            <h1>CETEM BH</h1>
+            <p>Centre d'Études et de Maintenance des Équipements Biomédicaux et Hospitaliers</p>
+            
+            <div class="maintenance-animation">
+                <div class="equipment">
+                    🏥
+                    <div class="status-indicator"></div>
+                </div>
+                <div class="tools">
+                    <div class="tool">🔧</div>
+                    <div class="tool">⚡</div>
+                    <div class="tool">🔬</div>
+                    <div class="tool">⚙️</div>
+                </div>
+            </div>
+            
+            <p style="font-size: 1.1rem; margin-top: 1rem;">Votre partenaire de confiance pour la maintenance des équipements médicaux en Tunisie</p>
+            <button class="btn" onclick="navigateTo('contact-page')">Contactez-nous</button>
+             <section id="contact" class="contact-section">
+        <div class="container">
+           
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Informations de Contact</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div>
+                            <strong>Adresse</strong><br>
+                            Tunisie
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div>
+                            <strong>Téléphone</strong><br>
+                            +216 XX XXX XXX
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div>
+                            <strong>Email</strong><br>
+                            contact@cetembh.tn
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">⏰</div>
+                        <div>
+                            <strong>Horaires</strong><br>
+                            Lun - Ven: 8h00 - 17h00<br>
+                            Urgences: 24h/24, 7j/7
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Envoyez-nous un message</h3>
+                    <form>
+                        <input type="text" placeholder="Nom complet" required>
+                        <input type="email" placeholder="Email" required>
+                        <input type="tel" placeholder="Téléphone">
+                        <textarea placeholder="Votre message" required></textarea>
+                        <button type="submit" class="btn" style="width: 100%;">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+        </section>
+    </div>
+
+    <!-- PAGE MAINTENANCE -->
+    <div id="maintenance-page" class="page">
+        <div class="maintenance-page">
+            <div class="page-header">
+                <h1>🔧 Maintenance des Équipements Biomédicaux</h1>
+                <p style="font-size: 1.2rem; margin-top: 1rem;">Excellence et expertise au service de la santé</p>
+            </div>
+
+            <div class="container">
+                <div class="process-flow">
+                    <h2>Notre Processus de Maintenance</h2>
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <div class="step-number">1</div>
+                            <h4>Diagnostic</h4>
+                            <p>Évaluation complète de l'équipement et identification des problèmes</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">2</div>
+                            <h4>Planification</h4>
+                            <p>Organisation de l'intervention et coordination avec les équipes</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">3</div>
+                            <h4>Intervention</h4>
+                            <p>Réparation ou maintenance par nos experts qualifiés</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">4</div>
+                            <h4>Validation</h4>
+                            <p>Tests de conformité et certification de l'équipement</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 style="text-align: center; color: #1e3c72; margin: 3rem 0 2rem;">Types de Maintenance</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon-large">🛠️</div>
+                        <h3>Maintenance Préventive</h3>
+                        <p>Interventions programmées pour garantir le bon fonctionnement de vos équipements.</p>
+                        <ul>
+                            <li>Inspection régulière</li>
+                            <li>Calibration des équipements</li>
+                            <li>Nettoyage et lubrification</li>
+                            <li>Tests de sécurité</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon-large">⚡</div>
+                        <h3>Maintenance Corrective</h3>
+                        <p>Intervention rapide en cas de panne pour minimiser les temps d'arrêt.</p>
+                        <ul>
+                            <li>Hotline 24/7</li>
+                            <li>Temps de réponse < 2h</li>
+                            <li>Équipes mobiles</li>
+                            <li>Stock de pièces détachées</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon-large">📊</div>
+                        <h3>Maintenance Prédictive</h3>
+                        <p>Anticipation des pannes grâce à l'analyse des données et au monitoring.</p>
+                        <ul>
+                            <li>Suivi en temps réel</li>
+                            <li>Analyse des tendances</li>
+                            <li>Alertes automatiques</li>
+                            <li>Optimisation des coûts</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE SERVICES -->
+    <div id="services-page" class="page">
+        <div class="services-page">
+            <div class="page-header">
+                <h1>Nos Services</h1>
+                <p style="font-size: 1.2rem; margin-top: 1rem;">Des solutions complètes pour vos équipements biomédicaux</p>
+            </div>
+
+            <div class="container">
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon-large">🔧</div>
+                        <h3>Installation & Mise en Service</h3>
+                        <p>Installation professionnelle de vos nouveaux équipements biomédicaux avec formation du personnel.</p>
+                        <ul>
+                            <li>Installation selon normes</li>
+                            <li>Tests de conformité</li>
+                            <li>Formation utilisateurs</li>
+                            <li>Documentation complète</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon-large">📋</div>
+                        <h3>Contrôle Qualité</h3>
+                        <p>Vérifications et tests de conformité selon les normes internationales en vigueur.</p>
+                        <ul>
+                            <li>Tests électriques</li>
+                            <li>Contrôles métrologiques</li>
+                            <li>Audits de conformité</li>
+                            <li>Rapports détaillés</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon-large">📚</div>
+                        <h3>Formation</h3>
+                        <p>Formation complète du personnel médical et technique à l'utilisation et l'entretien.</p>
+                        <ul>
+                            <li>Formation sur site</li>
+                            <li>Ateliers pratiques</li>
+                            <li>Certifications</li>
+                            <li>Support continu</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon-large">💡</div>
+                        <h3>Conseil & Expertise</h3>
+                        <p>Accompagnement dans le choix et l'acquisition d'équipements biomédicaux adaptés.</p>
+                        <ul>
+                            <li>Études de besoins</li>
+                            <li>Recommandations techniques</li>
+                            <li>Cahiers des charges</li>
+                            <li>Optimisation budgétaire</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon-large">🗂️</div>
+                        <h3>Gestion de Parc GMAO</h3>
+                        <p>Suivi et gestion complète de votre parc d'équipements avec système informatisé.</p>
+                        <ul>
+                            <li>Inventaire complet</li>
+                            <li>Planification automatique</li>
+                            <li>Historique détaillé</li>
+                            <li>Rapports d'analyse</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon-large">🔄</div>
+                        <h3>Location & Dépannage</h3>
+                        <p>Service de location d'équipements de remplacement pendant les réparations.</p>
+                        <ul>
+                            <li>Équipements de backup</li>
+                            <li>Livraison rapide</li>
+                            <li>Installation incluse</li>
+                            <li>Support technique</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE ÉQUIPEMENTS - Liste des Services -->
+    <div id="equipements-page" class="page">
+        <div class="equipment-page">
+            <div class="page-header">
+                <h1>Équipements par Service Médical</h1>
+                <p style="font-size: 1.2rem; margin-top: 1rem;">Sélectionnez un service pour voir les équipements</p>
+            </div>
+
+            <div class="container">
+                <div class="service-categories-grid">
+                    <div class="service-category-card" onclick="navigateTo('imagerie-page')">
+                        <div class="service-category-icon">🏥</div>
+                        <h3>Imagerie Médicale</h3>
+                        <p>IRM, Scanner, Échographie, Radiologie</p>
+                        <span class="equipment-count">6 équipements</span>
+                    </div>
+
+                    <div class="service-category-card" onclick="navigateTo('bloc-page')">
+                        <div class="service-category-icon">💉</div>
+                        <h3>Bloc Opératoire</h3>
+                        <p>Tables, Scialytiques, Anesthésie</p>
+                        <span class="equipment-count">6 équipements</span>
+                    </div>
+
+                    <div class="service-category-card" onclick="navigateTo('reanimation-page')">
+                        <div class="service-category-icon">🫀</div>
+                        <h3>Réanimation & Monitoring</h3>
+                        <p>Respirateurs, Moniteurs, Défibrillateurs</p>
+                        <span class="equipment-count">6 équipements</span>
+                    </div>
+
+                    <div class="service-category-card" onclick="navigateTo('laboratoire-page')">
+                        <div class="service-category-icon">🔬</div>
+                        <h3>Laboratoire</h3>
+                        <p>Automates, Microscopes, Centrifugeuses</p>
+                        <span class="equipment-count">6 équipements</span>
+                    </div>
+
+                    <div class="service-category-card" onclick="navigateTo('dialyse-page')">
+                        <div class="service-category-icon">🫁</div>
+                        <h3>Néphrologie & Dialyse</h3>
+                        <p>Générateurs de dialyse, Osmoseurs</p>
+                        <span class="equipment-count">4 équipements</span>
+                    </div>
+
+                    <div class="service-category-card" onclick="navigateTo('autres-page')">
+                        <div class="service-category-icon">⚕️</div>
+                        <h3>Autres Services</h3>
+                        <p>Stérilisation, Endoscopie, Dentaire</p>
+                        <span class="equipment-count">6 équipements</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE DÉTAIL - IMAGERIE MÉDICALE -->
+    <div id="imagerie-page" class="page">
+        <div class="equipment-detail-page">
+            <div class="back-nav">
+                <button class="back-btn" onclick="navigateTo('equipements-page')">← Retour aux services</button>
+            </div>
+
+            <div class="page-header">
+                <h1>🏥 Service d'Imagerie Médicale</h1>
+                <p style="font-size: 1.2rem; margin-top: 1rem;">Équipements de diagnostic par imagerie</p>
+            </div>
+
+            <div class="container">
+                <div class="equipment-details-grid">
+                    <div class="equipment-detail-card">
+                        <h3>🧲 IRM - Imagerie par Résonance Magnétique</h3>
+                        <p>L'IRM utilise des champs magnétiques puissants et des ondes radio pour créer des images détaillées des organes et tissus internes.</p>
+                        
+                        <h4>Applications cliniques :</h4>
+                        <ul>
+                            <li>Neurologie (cerveau, moelle épinière)</li>
+                            <li>Cardiologie (cœur et vaisseaux)</li>
+                            <li>Orthopédie (articulations, ligaments)</li>
+                            <li>Oncologie (détection de tumeurs)</li>
+                        </ul>
+
+                        <h4>Types d'IRM :</h4>
+                        <ul>
+                            <li>IRM 1.5 Tesla (usage général)</li>
+                            <li>IRM 3 Tesla (haute résolution)</li>
+                            <li>IRM ouverte (patients claustrophobes)</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Contrôle quotidien, calibration mensuelle, maintenance préventive trimestrielle
+                        </div>
+                    </div>
+
+                    <div class="equipment-detail-card">
+                        <h3>🔍 Scanner CT - Tomodensitométrie</h3>
+                        <p>Le scanner utilise des rayons X pour produire des images en coupe transversale du corps, permettant une analyse détaillée.</p>
+                        
+                        <h4>Utilisations principales :</h4>
+                        <ul>
+                            <li>Urgences (traumatismes, AVC)</li>
+                            <li>Thorax (poumons, médiastin)</li>
+                            <li>Abdomen et pelvis</li>
+                            <li>Angiographie CT</li>
+                        </ul>
+
+                        <h4>Technologies :</h4>
+                        <ul>
+                            <li>Scanner 16 barrettes</li>
+                            <li>Scanner 64 barrettes</li>
+                            <li>Scanner 128+ barrettes (haute définition)</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Vérification quotidienne du tube, calibration hebdomadaire, maintenance préventive mensuelle
+                        </div>
+                    </div>
+
+                    <div class="equipment-detail-card">
+                        <h3>📡 Échographes</h3>
+                        <p>Les échographes utilisent des ultrasons pour créer des images en temps réel des organes internes et des structures corporelles.</p>
+                        
+                        <h4>Domaines d'application :</h4>
+                        <ul>
+                            <li>Obstétrique et gynécologie</li>
+                            <li>Cardiologie (échocardiographie)</li>
+                            <li>Abdominale (foie, reins, rate)</li>
+                            <li>Vasculaire (Doppler)</li>
+                            <li>Musculo-squelettique</li>
+                        </ul>
+
+                        <h4>Types de sondes :</h4>
+                        <ul>
+                            <li>Sonde convexe (abdomen)</li>
+                            <li>Sonde linéaire (superficielle)</li>
+                            <li>Sonde cardiaque</li>
+                            <li>Sonde endocavitaire</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Nettoyage après chaque utilisation, test des sondes mensuel, calibration semestrielle
+                        </div>
+                    </div>
+
+                    <div class="equipment-detail-card">
+                        <h3>📷 Radiologie Conventionnelle</h3>
+                        <p>Systèmes de radiographie standard pour images en 2D des structures osseuses et organes.</p>
+                        
+                        <h4>Examens courants :</h4>
+                        <ul>
+                            <li>Radiographie thoracique</li>
+                            <li>Radiographie osseuse</li>
+                            <li>Radiographie dentaire</li>
+                            <li>Radiographie abdominale</li>
+                        </ul>
+
+                        <h4>Composants :</h4>
+                        <ul>
+                            <li>Générateur de rayons X</li>
+                            <li>Tube radiogène</li>
+                            <li>Détecteur numérique (DR)</li>
+                            <li>Système de positionnement</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Contrôle qualité hebdomadaire, test du tube mensuel, maintenance semestrielle
+                        </div>
+                    </div>
+
+                    <div class="equipment-detail-card">
+                        <h3>🎗️ Mammographes</h3>
+                        <p>Équipements spécialisés pour le dépistage et le diagnostic du cancer du sein.</p>
+                        
+                        <h4>Fonctionnalités :</h4>
+                        <ul>
+                            <li>Mammographie 2D standard</li>
+                            <li>Tomosynthèse 3D</li>
+                            <li>Biopsie guidée</li>
+                            <li>Contrôle qualité automatisé</li>
+                        </ul>
+
+                        <h4>Protocoles :</h4>
+                        <ul>
+                            <li>Dépistage systématique</li>
+                            <li>Diagnostic complémentaire</li>
+                            <li>Suivi post-traitement</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Contrôle qualité quotidien, calibration hebdomadaire, maintenance trimestrielle
+                        </div>
+                    </div>
+
+                    <div class="equipment-detail-card">
+                        <h3>🩸 Angiographes</h3>
+                        <p>Systèmes d'imagerie vasculaire pour visualiser les vaisseaux sanguins avec injection de produit de contraste.</p>
+                        
+                        <h4>Interventions :</h4>
+                        <ul>
+                            <li>Coronarographie</li>
+                            <li>Angioplastie</li>
+                            <li>Embolisation</li>
+                            <li>Neuroradiologie interventionnelle</li>
+                        </ul>
+
+                        <h4>Caractéristiques :</h4>
+                        <ul>
+                            <li>Table articulée</li>
+                            <li>Arc en C mobile</li>
+                            <li>Injection automatique de contraste</li>
+                            <li>Traitement d'image en temps réel</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Vérification avant chaque procédure, maintenance préventive mensuelle
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE DÉTAIL - BLOC OPÉRATOIRE -->
+    <div id="bloc-page" class="page">
+        <div class="equipment-detail-page">
+            <div class="back-nav">
+                <button class="back-btn" onclick="navigateTo('equipements-page')">← Retour aux services</button>
+            </div>
+
+            <div class="page-header">
+                <h1>💉 Service de Bloc Opératoire</h1>
+                <p style="font-size: 1.2rem; margin-top: 1rem;">Équipements chirurgicaux</p>
+            </div>
+
+            <div class="container">
+                <div class="equipment-details-grid">
+                    <div class="equipment-detail-card">
+                        <h3>🛏️ Tables Opératoires</h3>
+                        <p>Tables chirurgicales multi-positionnables pour différents types d'interventions.</p>
+                        
+                        <h4>Caractéristiques :</h4>
+                        <ul>
+                            <li>Motorisation électrique ou hydraulique</li>
+                            <li>Positions multiples (Trendelenburg, latérale)</li>
+                            <li>Plateaux interchangeables</li>
+                            <li>Colonne mobile ou fixe</li>
+                            <li>Charge maximale 200-300 kg</li>
+                        </ul>
+
+                        <h4>Types de tables :</h4>
+                        <ul>
+                            <li>Table universelle</li>
+                            <li>Table orthopédique</li>
+                            <li>Table urologique</li>
+                            <li>Table ophtalmologique</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Nettoyage désinfection après chaque usage, vérification motorisation mensuelle
+                        </div>
+                    </div>
+
+                    <div class="equipment-detail-card">
+                        <h3>💡 Scialytiques - Lampes Opératoires</h3>
+                        <p>Éclairage chirurgical à haute intensité sans ombre pour le champ opératoire.</p>
+                        
+                        <h4>Technologies :</h4>
+                        <ul>
+                            <li>LED haute performance</li>
+                            <li>Température de couleur réglable</li>
+                            <li>Intensité ajustable</li>
+                            <li>Faible émission de chaleur</li>
+                            <li>Commande tactile stérile</li>
+                        </ul>
+
+                        <h4>Configurations :</h4>
+                        <ul>
+                            <li>Simple coupole</li>
+                            <li>Double coupole</li>
+                            <li>Fixation au plafond ou mobile</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Nettoyage hebdomadaire, test intensité mensuel, remplacement LED si nécessaire
+                        </div>
+                    </div>
+
+                    <div class="equipment-detail-card">
+                        <h3>🏗️ Colonnes Chirurgicales</h3>
+                        <p>Systèmes de support et d'alimentation pour équipements chirurgicaux.</p>
+                        
+                        <h4>Fonctionnalités :</h4>
+                        <ul>
+                            <li>Alimentation électrique et gaz médicaux</li>
+                            <li>Support pour moniteurs et écrans</li>
+                            <li>Bras articulés</li>
+                            <li>Tiroirs de rangement</li>
+                            <li>Prises multimédia intégrées</li>
+                        </ul>
+
+                        <h4>Types :</h4>
+                        <ul>
+                            <li>Colonne fixe plafonnière</li>
+                            <li>Colonne mobile</li>
+                            <li>Bras pendants</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Vérification des connexions mensuellement, maintenance préventive semestrielle
+                        </div>
+                    </div>
+
+                    <div class="equipment-detail-card">
+                        <h3>⚡ Bistouris Électriques</h3>
+                        <p>Générateurs électrochirurgicaux pour coagulation et section des tissus.</p>
+                        
+                        <h4>Modes de fonctionnement :</h4>
+                        <ul>
+                            <li>Coagulation monopolaire</li>
+                            <li>Coagulation bipolaire</li>
+                            <li>Section (cut)</li>
+                            <li>Mode blend (mixte)</li>
+                        </ul>
+
+                        <h4>Applications :</h4>
+                        <ul>
+                            <li>Chirurgie générale</li>
+                            <li>Chirurgie laparoscopique</li>
+                            <li>Chirurgie plastique</li>
+                            <li>ORL</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Test de sécurité avant chaque usage, calibration trimestrielle, vérification annuelle
+                        </div>
+                    </div>
+
+                    <div class="equipment-detail-card">
+                        <h3>💨 Aspirateurs Chirurgicaux</h3>
+                        <p>Systèmes d'aspiration pour liquides biologiques pendant les interventions.</p>
+                        
+                        <h4>Caractéristiques :</h4>
+                        <ul>
+                            <li>Aspiration réglable</li>
+                            <li>Réservoirs jetables ou autoclavables</li>
+                            <li>Filtres antibactériens</li>
+                            <li>Niveau sonore réduit</li>
+                        </ul>
+
+                        <h4>Types :</h4>
+                        <ul>
+                            <li>Aspirateurs sur pied mobiles</li>
+                            <li>Aspirateurs muraux centralisés</li>
+                            <li>Aspiration portative</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Désinfection après chaque usage, changement filtres mensuel, vérification pompe trimestrielle
+                        </div>
+                    </div>
+
+                    <div class="equipment-detail-card">
+                        <h3>😷 Systèmes d'Anesthésie</h3>
+                        <p>Stations complètes pour l'administration et le monitoring de l'anesthésie générale.</p>
+                        
+                        <h4>Composants :</h4>
+                        <ul>
+                            <li>Respirateur d'anesthésie</li>
+                            <li>Vaporisateurs (Sévoflurane, Desflurane)</li>
+                            <li>Circuit patient</li>
+                            <li>Système de chariotage</li>
+                            <li>Monitoring intégré</li>
+                        </ul>
+
+                        <h4>Fonctions de sécurité :</h4>
+                        <ul>
+                            <li>Alarmes de pression et volume</li>
+                            <li>Détection de déconnexion</li>
+                            <li>Mélangeur O2/Air/N2O</li>
+                            <li>Valve anti-hypoxie</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Check-list quotidienne obligatoire, test de fuite hebdomadaire, maintenance préventive trimestrielle
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE DÉTAIL - RÉANIMATION -->
+    <div id="reanimation-page" class="page">
+        <div class="equipment-detail-page">
+            <div class="back-nav">
+                <button class="back-btn" onclick="navigateTo('equipements-page')">← Retour aux services</button>
+            </div>
+
+            <div class="page-header">
+                <h1>🫀 Service de Réanimation & Monitoring</h1>
+                <p style="font-size: 1.2rem; margin-top: 1rem;">Équipements de soins intensifs</p>
+            </div>
+
+            <div class="container">
+                <div class="equipment-details-grid">
+                    <div class="equipment-detail-card">
+                        <h3>📊 Moniteurs Multiparamètres</h3>
+                        <p>Surveillance continue des paramètres vitaux du patient en temps réel.</p>
+                        
+                        <h4>Paramètres surveillés :</h4>
+                        <ul>
+                            <li>ECG 3, 5 ou 12 dérivations</li>
+                            <li>SpO2 (saturation en oxygène)</li>
+                            <li>Pression artérielle (NIBP/invasive)</li>
+                            <li>Fréquence respiratoire</li>
+                            <li>Température</li>
+                            <li>Capnographie (EtCO2)</li>
+                            <li>Pression intracrânienne (PIC)</li>
+                        </ul>
+
+                        <h4>Fonctionnalités :</h4>
+                        <ul>
+                            <li>Alarmes configurables</li>
+                            <li>Enregistrement continu des tendances</li>
+                            <li>Écran tactile</li>
+                            <li>Batterie de secours</li>
+                            <li>Connectivité réseau</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Calibration mensuelle, test électrique de sécurité semestriel, étalonnage annuel
+                        </div>
+                    </div>
+
+                    <div class="equipment-detail-card">
+                        <h3>🫁 Respirateurs de Réanimation</h3>
+                        <p>Ventilateurs mécaniques pour assistance respiratoire des patients critiques.</p>
+                        
+                        <h4>Modes de ventilation :</h4>
+                        <ul>
+                            <li>Volume contrôlé (VC)</li>
+                            <li>Pression contrôlée (PC)</li>
+                            <li>SIMV (ventilation intermittente)</li>
+                            <li>CPAP/BIPAP</li>
+                            <li>PSV (aide inspiratoire)</li>
+                            <li>PRVC (volume garanti)</li>
+                        </ul>
+
+                        <h4>Monitoring intégré :</h4>
+                        <ul>
+                            <li>Volumes et pressions</li>
+                            <li>Compliance pulmonaire</li>
+                            <li>Résistance des voies aériennes</li>
+                            <li>Courbes de débit et pression</li>
+                            <li>FiO2 (fraction inspirée en O2)</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Test fonctionnel quotidien, désinfection circuits hebdomadaire, maintenance préventive mensuelle
+                        </div>
+                    </div>
+
+                    <div class="equipment-detail-card">
+                        <h3>⚡ Défibrillateurs</h3>
+                        <p>Appareils de cardioversion pour traiter les arythmies cardiaques graves.</p>
+                        
+                        <h4>Types de défibrillateurs :</h4>
+                        <ul>
+                            <li>Défibrillateur manuel (médecin)</li>
+                            <li>DEA - Défibrillateur automatique externe</li>
+                            <li>Défibrillateur implantable (DAI)</li>
+                        </ul>
+
+                        <h4>Fonctionnalités :</h4>
+                        <ul>
+                            <li>Mode synchronisé/non synchronisé</li>
+                            <li>Analyse automatique du rythme (DEA)</li>
+                            <li>Pacing externe</li>
+                            <li>Enregistrement ECG</li>
+                            <li>Instructions vocales (DEA)</li>
+                            <li>Énergie réglable (50-360 Joules)</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Vérification quotidienne obligatoire, test décharge mensuel, calibration semestrielle
+                        </div>
+                    </div>
+
+                    <div class="equipment-detail-card">
+                        <h3>💉 Pousse-Seringues Électriques</h3>
+                        <p>Pompes à perfusion pour administration précise de médicaments.</p>
+                        
+                        <h4>Applications :</h4>
+                        <ul>
+                            <li>Médicaments cardiovasculaires</li>
+                            <li>Sédation continue</li>
+                            <li>Analgésie</li>
+                            <li>Nutrition parentérale</li>
+                            <li>Chimiothérapie</li>
+                        </ul>
+
+                        <h4>Caractéristiques :</h4>
+                        <ul>
+                            <li>Débit précis (0.1-999 ml/h)</li>
+                            <li>Alarmes occlusion/vide</li>
+                            <li>Bibliothèque de médicaments</li>
+                            <li>Historique des perfusions</li>
+                            <li>Mode bolus</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Nettoyage après chaque usage, calibration débit trimestrielle, vérification électrique annuelle
+                        </div>
+                    </div>
+
+                    <div class="equipment-detail-card">
+                        <h3>📈 ECG - Électrocardiographes</h3>
+                        <p>Enregistrement de l'activité électrique du cœur pour diagnostic cardiaque.</p>
+                        
+                        <h4>Types d'ECG :</h4>
+                        <ul>
+                            <li>ECG 12 dérivations standard</li>
+                            <li>ECG d'effort (test d'effort)</li>
+                            <li>Holter ECG (24-48h)</li>
+                            <li>ECG haute résolution</li>
+                        </ul>
+
+                        <h4>Analyse automatique :</h4>
+                        <ul>
+                            <li>Fréquence cardiaque</li>
+                            <li>Rythme (sinusal, FA, etc.)</li>
+                            <li>Intervalles (PR, QT, QRS)</li>
+                            <li>Axes électriques</li>
+                            <li>Détection d'arythmies</li>
+                            <li>Signes d'ischémie/infarctus</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Calibration semestrielle, test des câbles et électrodes mensuellement
+                        </div>
+                    </div>
+
+                    <div class="equipment-detail-card">
+                        <h3>⌚ Holter</h3>
+                        <p>Enregistreur ECG ambulatoire pour surveillance cardiaque prolongée (24-72h).</p>
+                        
+                        <h4>Indications :</h4>
+                        <ul>
+                            <li>Palpitations inexpliquées</li>
+                            <li>Syncopes</li>
+                            <li>Dépistage d'arythmies</li>
+                            <li>Contrôle de traitement anti-arythmique</li>
+                            <li>Évaluation pacemaker</li>
+                        </ul>
+
+                        <h4>Analyse logicielle :</h4>
+                        <ul>
+                            <li>Détection automatique d'événements</li>
+                            <li>Statistiques sur 24h</li>
+                            <li>Corrélation symptômes-ECG</li>
+                            <li>Variabilité de la fréquence cardiaque</li>
+                        </ul>
+
+                        <div class="maintenance-info">
+                            <strong>Maintenance :</strong> Désinfection entre chaque patient, test de la batterie hebdomadaire, calibration annuelle
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE DÉTAIL - LABORATOIRE -->
+    <div id="laboratoire-page" class="page">
+        <div class="equipment-detail-page">
+            <div class="back-nav">
+                <button class="back-btn" onclick="navigateTo('equipements-page')">← Retour aux services</button>
+            </div>
+
+            <div class="page-header">
+                <h1>🔬 Service de Laboratoire</h1>
+                <p style="font-size: 1.2rem; margin-top: 1rem;">Équipements d'analyses médicales</p>
+            </div>
+
+            <div class="container">
+                <div class="equipment-details-grid">
+                    <div class="equipment-detail-card">
+                        <h3>🤖 Automates d'Analyses</h3>
+                        <p>Systèmes automatisés pour analyses biochimiques, hématologiques et immunologiques.</p>
+                        
+                        <h4>Types d'automates :</h4>
+                        <ul>
+                            <li>Biochimie (glycémie, enzymes, ions)</li>
+                            <li>Hématologie (numération formule sanguine)</li>
+                            <li>Immunologie (sérologie, hormones)</li>
+                            <li>Coagulation (TP, TCA, fibrinogène)</li>
+                            <li>Microbiologie (hémocultures)</li>
+                        </ul>
+
+                        <h4>Avantages :</h4>
+                        <ul>
+                            <li>Haut débit (100-500 tests/heure)</li>
+                            <li>Précision et reproductibilité</li>
+                            <li>Traçabilité complète</li>
+
+                <div class="equipment-category">
+                    <h3><span>💉
